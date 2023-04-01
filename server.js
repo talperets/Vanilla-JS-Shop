@@ -151,10 +151,10 @@ app.post("/approve", async (req, res) => {
   }
 });
 
-app.get("/all", (req, res) => {
+app.get("/all", middle,(req, res) => {
   res.sendFile(__dirname + "/pages/admin.html");
 });
-app.use(middle);
+
 app.get("/active", (req, res) => {
   const find = async () => {
     try {

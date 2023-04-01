@@ -1,6 +1,12 @@
 const productsContainer = document.getElementById("products-container");
 fetch("/active")
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error("Network response was not ok.");
+    }
+  })
   .then((data) => {
     productsContainer.innerHTML = "";
     data.forEach((order) => {
@@ -22,4 +28,6 @@ fetch("/active")
       });
     });
   })
-  .catch((error) => console.error(error));
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });
