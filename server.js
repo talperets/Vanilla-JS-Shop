@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("pages"));
 db.connect(
-  "mongodb+srv://talperets3:ykspy8949@cluster0.ad29uqg.mongodb.net/svstore"
+  ""
 );
 const middle = (req, res, next) => {
   if (req.query.admin == "true") {
