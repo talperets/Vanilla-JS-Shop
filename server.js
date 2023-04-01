@@ -3,12 +3,11 @@ const bodyParser = require("body-parser");
 const db = require("mongoose");
 const nodeMailer = require("nodemailer");
 const app = express();
+require("dotenv").config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("pages"));
-db.connect(
-  ""
-);
+db.connect(process.env.CONNECTION_STRING);
 const middle = (req, res, next) => {
   if (req.query.admin == "true") {
     next();
