@@ -19,6 +19,7 @@ email.addEventListener("keyup", () => {
 });
 
 const login = () => {
+  submit.disabled = true;
   fetch("/sendmail", {
     headers: {
       "Content-Type": "application/json",

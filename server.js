@@ -113,8 +113,8 @@ app.post("/sendmail", async (req, res) => {
       host: "smtp.ethereal.email",
       port: 587,
       auth: {
-        user: "dorris.schowalter3@ethereal.email",
-        pass: "TCBb2m9nyFqRXG5cUk",
+        user: process.env.TRANSPORTER_USER,
+        pass: process.env.TRANSPORTER_PASSWORD,
       },
     });
     let user = await userModel.findOne({ email: email });
