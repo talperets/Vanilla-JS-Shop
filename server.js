@@ -6,7 +6,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("pages"));
-db.connect("");
+db.connect(
+  "mongodb+srv://talperets3:ykspy8949@cluster0.ad29uqg.mongodb.net/svstore"
+);
 const middle = (req, res, next) => {
   if (req.query.admin == "true") {
     next();
@@ -104,6 +106,7 @@ app.post("/order", async (req, res) => {
 app.get("/forgot", (req, res) => {
   res.sendFile(__dirname + "/pages/forgot.html");
 });
+
 app.post("/sendmail", async (req, res) => {
   try {
     const { email } = req.body;
@@ -116,6 +119,9 @@ app.post("/sendmail", async (req, res) => {
       },
     });
     let user = await userModel.findOne({ email: email });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
     let password = user.password;
     let info = await transporter.sendMail({
       from: '"Rhianna from SV-Store" <rhianna.beer@ethereal.email>',
@@ -125,7 +131,11 @@ app.post("/sendmail", async (req, res) => {
     });
     console.log("Message sent: %s", info.messageId);
     console.log("Preview URL: %s", nodeMailer.getTestMessageUrl(info));
-  } catch (error) {}
+    return res.status(200).send("Email sent successfully");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
+  }
 });
 
 app.post("/approve", async (req, res) => {
@@ -142,10 +152,10 @@ app.post("/approve", async (req, res) => {
   }
 });
 
-app.get("/all", middle, (req, res) => {
+app.get("/all", (req, res) => {
   res.sendFile(__dirname + "/pages/admin.html");
 });
-// app.use(middle);
+app.use(middle);
 app.get("/active", (req, res) => {
   const find = async () => {
     try {
