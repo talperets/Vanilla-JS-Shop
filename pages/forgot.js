@@ -27,7 +27,15 @@ const login = () => {
     body: JSON.stringify({
       email: email.value,
     }),
-  }).catch((error) => console.error(error));
-  window.location.href = "/";
+  })
+    .then((response) => {
+      if (response.ok) {
+        window.location.href = "/";
+      } else {
+        throw new Error("Something went wrong");
+      }
+    })
+    .catch((error) => console.error(error));
 };
+
 submit.addEventListener("click", login);

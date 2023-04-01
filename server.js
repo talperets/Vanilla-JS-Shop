@@ -114,8 +114,8 @@ app.post("/sendmail", async (req, res) => {
       host: "smtp.ethereal.email",
       port: 587,
       auth: {
-        user: "rhianna.beer@ethereal.email",
-        pass: "eQy6VjfXaFr5wz6gwF",
+        user: "dorris.schowalter3@ethereal.email",
+        pass: "TCBb2m9nyFqRXG5cUk",
       },
     });
     let user = await userModel.findOne({ email: email });
@@ -124,7 +124,7 @@ app.post("/sendmail", async (req, res) => {
     }
     let password = user.password;
     let info = await transporter.sendMail({
-      from: '"Rhianna from SV-Store" <rhianna.beer@ethereal.email>',
+      from: '"Dorris from SV-Store" <rhianna.beer@ethereal.email>',
       to: email,
       subject: "Password",
       text: `Your password is ${password}`,
